@@ -8,149 +8,77 @@ namespace PrzetwarzanieObrazow
 {
     class Filters
     {
-        //public static void Negative(object param)
-        //{
-        //    Bitmap image = (Bitmap)param;
-
-        //    int maxValue = 255;
-        //    for (int y = 0; y < image.Height; y++)
-        //    {
-        //        for (int x = 0; x < image.Width; x++)
-        //        {
-        //            Color pixel = image.GetPixel(x, y);
-        //            image.SetPixel(x, y, Color.FromArgb(pixel.A, maxValue - pixel.R, maxValue - pixel.G, maxValue - pixel.B));
-        //        }
-        //    }
-
-        //}
-
-        public static Bitmap Negative(Bitmap image)
+        public static void Negative(object param)
         {
+           Bitmap image = (Bitmap)param;
 
-            int maxValue = 255;
-            for (int y = 0; y < image.Height; y++)
-            {
-                for (int x = 0; x < image.Width; x++)
-                {
-                    Color pixel = image.GetPixel(x, y);
-                    image.SetPixel(x, y, Color.FromArgb(pixel.A, maxValue - pixel.R, maxValue - pixel.G, maxValue - pixel.B));
-                }
-            }
-            return image;
+           int maxValue = 255;
+           for (int y = 0; y < image.Height; y++)
+           {
+               for (int x = 0; x < image.Width; x++)
+               {
+                   Color pixel = image.GetPixel(x, y);
+                   image.SetPixel(x, y, Color.FromArgb(pixel.A, maxValue - pixel.R, maxValue - pixel.G, maxValue - pixel.B));
+               }
+           }
+
         }
 
-        public static Bitmap Greyscale(Bitmap image)
+      
+        public static void Greyscale(object param)
         {
+           Bitmap image = (Bitmap)param;
 
-            double kr = 0.299;
-            double kg = 0.587;
-            double kb = 0.114;
+           double kr = 0.299;
+           double kg = 0.587;
+           double kb = 0.114;
 
-            for (int y = 0; y < image.Height; y++)
-            {
-                for (int x = 0; x < image.Width; x++)
-                {
-                    Color pixel = image.GetPixel(x, y);
-                    int grey = (int)(kr * pixel.R + kg * pixel.G + kb * pixel.B);
-                    image.SetPixel(x, y, Color.FromArgb(grey, grey, grey));
-                }
-            }
-            return image;
+           for (int y = 0; y < image.Height; y++)
+           {
+               for (int x = 0; x < image.Width; x++)
+               {
+                   Color pixel = image.GetPixel(x, y);
+                   int grey = (int)(kr * pixel.R + kg * pixel.G + kb * pixel.B);
+                   image.SetPixel(x, y, Color.FromArgb(grey, grey, grey));
+               }
+           }
         }
 
-        public static Bitmap mirror(Bitmap image)
+        public static void mirror(object param)
         {
+           Bitmap image = (Bitmap)param;
 
-            for (int y = 0; y < image.Height; y++)
-            {
-                for (int x = 0; x < image.Width / 2; x++)
-                {
-                    Color leftPixel = image.GetPixel(x, y);
-                    Color rightPixel = image.GetPixel(image.Width - x - 1, y);
+           for (int y = 0; y < image.Height; y++)
+           {
+               for (int x = 0; x < image.Width / 2; x++)
+               {
+                   Color leftPixel = image.GetPixel(x, y);
+                   Color rightPixel = image.GetPixel(image.Width - x - 1, y);
 
-                    image.SetPixel(x, y, rightPixel);
-                    image.SetPixel(image.Width - x - 1, y, leftPixel);
-                }
-            }
-
-            return image;
+                   image.SetPixel(x, y, rightPixel);
+                   image.SetPixel(image.Width - x - 1, y, leftPixel);
+               }
+           }
         }
 
-        public static Bitmap Threshhold(Bitmap image)
+        public static void Threshhold(object param)
         {
-            int threshhold = 140;
+           Bitmap image = (Bitmap)param;
+           int threshhold = 140;
 
-            for (int y = 0; y < image.Height; y++)
-            {
-                for (int x = 0; x < image.Width; x++)
-                {
-                    Color pixel = image.GetPixel(x, y);
-                    int grey = (int)((pixel.R + pixel.G + pixel.B) / 3);
-                    if (grey < threshhold)
-                        image.SetPixel(x, y, Color.Black);
-                    else
-                        image.SetPixel(x, y, Color.White);
-                }
-            }
-
-            return image;
+           for (int y = 0; y < image.Height; y++)
+           {
+               for (int x = 0; x < image.Width; x++)
+               {
+                   Color pixel = image.GetPixel(x, y);
+                   int grey = (int)((pixel.R + pixel.G + pixel.B) / 3);
+                   if (grey < threshhold)
+                       image.SetPixel(x, y, Color.Black);
+                   else
+                       image.SetPixel(x, y, Color.White);
+               }
+           }
         }
-
-
-        //public static void Greyscale(object param)
-        //{
-        //    Bitmap image = (Bitmap)param;
-
-        //    double kr = 0.299;
-        //    double kg = 0.587;
-        //    double kb = 0.114;
-
-        //    for (int y = 0; y < image.Height; y++)
-        //    {
-        //        for (int x = 0; x < image.Width; x++)
-        //        {
-        //            Color pixel = image.GetPixel(x, y);
-        //            int grey = (int)(kr * pixel.R + kg * pixel.G + kb * pixel.B);
-        //            image.SetPixel(x, y, Color.FromArgb(grey, grey, grey));
-        //        }
-        //    }
-        //}
-
-        //public static void mirror(object param)
-        //{
-        //    Bitmap image = (Bitmap)param;
-
-        //    for (int y = 0; y < image.Height; y++)
-        //    {
-        //        for (int x = 0; x < image.Width / 2; x++)
-        //        {
-        //            Color leftPixel = image.GetPixel(x, y);
-        //            Color rightPixel = image.GetPixel(image.Width - x - 1, y);
-
-        //            image.SetPixel(x, y, rightPixel);
-        //            image.SetPixel(image.Width - x - 1, y, leftPixel);
-        //        }
-        //    }
-        //}
-
-        //public static void Threshhold(object param)
-        //{
-        //    Bitmap image = (Bitmap)param;
-        //    int threshhold = 140;
-
-        //    for (int y = 0; y < image.Height; y++)
-        //    {
-        //        for (int x = 0; x < image.Width; x++)
-        //        {
-        //            Color pixel = image.GetPixel(x, y);
-        //            int grey = (int)((pixel.R + pixel.G + pixel.B) / 3);
-        //            if (grey < threshhold)
-        //                image.SetPixel(x, y, Color.Black);
-        //            else
-        //                image.SetPixel(x, y, Color.White);
-        //        }
-        //    }
-        //}
 
     }
 }
